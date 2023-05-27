@@ -32,5 +32,9 @@ def generate(prompt: str):
         image = pipe(prompt, guidance_scale=8.5).images[0]
 
     image.save("testImg.png")
+    buffer = BytesIO()
+    image.save(buffer, format="PNG")
+    imgstr = base64.b64encode(buffer.getvalue())
 
-    return {"res": "test"}
+    # return Response(content=imgstr, media_type="image/png")
+    return {'image': imgstr}
